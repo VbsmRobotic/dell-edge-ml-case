@@ -225,17 +225,15 @@ The precision for failure detection is just 1.5%, and the F1 score is only 0.03 
 
 
 ### ✅ Recommendations for Real-World Applications:
-#### For production-grade predictive maintenance systems, consider integrating:
+For production-grade predictive maintenance systems, consider integrating:
 
-##### Anomaly detection models that learn patterns of normal behavior and flag deviations
+ - Anomaly detection models that learn patterns of normal behavior and flag deviations
 
-##### Cost-sensitive learning or custom loss functions to penalize false positives more heavily
+ - Cost-sensitive learning or custom loss functions to penalize false positives more heavily
 
-##### Oversampling/undersampling strategies to balance the dataset (e.g., SMOTE)
+ - Oversampling/undersampling strategies to balance the dataset (e.g., SMOTE)
 
-##### Temporal models such as LSTMs, TCNs, or Transformers to capture sequential SMART trends
 
-##### Hybrid or ensemble methods tuned for rare event detection
 
 ### 🎯 Summary:
 The current model offers a good starting point for experimentation but would require significant refinement to be trusted in production. Future work should focus on handling rare events more robustly and aligning model behavior with real-world operational constraints.
