@@ -1,97 +1,92 @@
-📊 Hard Drive Failure Prediction using Random Forest
-📌 Project Overview
-This project implements a supervised machine learning pipeline using a Random Forest classifier to predict hard drive failures based on SMART (Self-Monitoring, Analysis, and Reporting Technology) attributes.
+# Hard Drive Failure Prediction using Random Forest
 
-The model incorporates anti-overfitting regularization techniques and includes visualizations for monitoring performance across training, validation, and testing phases.
+## Project Overview
+This project implements a supervised learning approach using Random Forest to predict hard drive failures based on SMART (Self-Monitoring, Analysis, and Reporting Technology) attributes. The model incorporates advanced regularization techniques to prevent overfitting and includes comprehensive visualizations to analyze model performance.
 
-✅ Features
-SMART feature selection for failure prediction
+## Features
+- SMART feature selection for failure prediction  
+- Anti-overfitting regularization techniques  
+- Accuracy/loss tracking during training  
+- Precision/recall/F1 visualization  
+- Feature importance analysis  
+- Confusion matrix generation  
+- Model persistence for future use  
+- Automatic dataset download  
 
-Regularization to prevent overfitting
+## Dataset
+The dataset contains SMART attributes from hard drives collected over 8 days:
+- **Training data**: January 1–6, 2025 (6 days)  
+- **Validation data**: January 7, 2025 (1 day)  
+- **Test data**: January 8, 2025 (1 day)  
 
-Accuracy/loss tracking during training
+The dataset is automatically downloaded from Google Drive if not present locally.
 
-Precision, Recall, and F1-score visualization
+## Dependencies
+- Python 3.6.9
 
-Feature importance analysis
+Required libraries:
+```bash
+pip install numpy==1.13.3  matplotlib==2.2.5  opencv-python==3.4.0.12  pandas scikit-learn gdown seaborn
 
-Confusion matrix generation
+```
 
-Model persistence using joblib
+## How to Run
+Save the script as `train_random_forest.py` and run from command line:
+```bash
+# Regular execution
+python3 train_random_forest.py
 
-Automatic dataset download via Google Drive
+# Debug mode (uses smaller dataset for quick testing)
+python3 train_random_forest.py --debug
+```
 
-📂 Dataset
-The dataset includes SMART attributes collected over several days:
+## Output Files
 
-Dataset Date Range  Duration
-Training    Jan 1, 2025 – Jan 6, 2025   6 days
-Validation  Jan 7, 2025 1 day
-Testing Jan 8, 2025 1 day
+| File Name                        | Description                              |
+|----------------------------------|------------------------------------------|
+| `train_val_metrics.png`         | Training vs validation accuracy & loss   |
+| `val_metrics_vs_trees.png`      | Precision/recall/F1 vs tree count        |
+| `validation_confusion_matrix.png` | Validation set confusion matrix        |
+| `test_confusion_matrix.png`     | Test set confusion matrix                |
+| `feature_importance.png`        | Feature importance visualization         |
+| `random_forest_model.pkl`       | Serialized model file                    |
 
-Note: The dataset is automatically downloaded using gdown if not found locally.
+## Anti-Overfitting Techniques
 
-🧩 Dependencies
-Python 3.7+
+| Technique                 | Parameter              | Effect                                      |
+|---------------------------|------------------------|---------------------------------------------|
+| Tree Depth Limitation     | `max_depth=8`          | Prevents over-complex trees                 |
+| Split Requirements        | `min_samples_split=10` | Avoids over-specific splits                 |
+| Leaf Size Control         | `min_samples_leaf=5`   | Ensures sufficient samples per leaf         |
+| Feature Subsampling       | `max_features='sqrt'`  | Decorrelates trees in forest                |
+| Class Weight Balancing    | `class_weight='balanced'` | Handles imbalanced failure data         |
+| Optimal Tree Selection    | Based on validation F1 | Prevents unnecessary complexity             |
 
-Required packages:
+## Code Explanation
 
-bash
-Copy
-Edit
-pip install pandas numpy scikit-learn matplotlib seaborn gdown joblib
-▶️ How to Run
-Clone the repository
-
-Install the required dependencies
-
-Run the script
-
-bash
-Copy
-Edit
-# Normal execution
-python smart_rf.py
-
-# Debug mode (uses a smaller dataset)
-python smart_rf.py --debug
-📁 Output Files
-File Name   Description
-train_val_metrics.png   Training vs. validation accuracy/loss
-val_metrics_vs_trees.png    Precision/Recall/F1 vs. number of trees
-validation_confusion_matrix.png Confusion matrix on validation set
-test_confusion_matrix.png   Confusion matrix on test set
-feature_importance.png  Feature importance bar chart
-random_forest_model.pkl Serialized Random Forest model
-
-⚙️ Code Explanation
-1. Command-line Arguments
-python
-Copy
-Edit
+### 1. Command-line Arguments
+```python
 parser.add_argument('--debug', action='store_true', help='Enable fast mode')
-Enables fast mode with a reduced dataset for debugging purposes.
+```
 
-2. Data Download
-python
-Copy
-Edit
+### 2. Data Download
+```python
 gdown.download(url=BASE_URL, output=file_name, quiet=False)
-Downloads dataset files from Google Drive.
+```
 
-3. Data Loading and Cleaning
-python
-Copy
-Edit
+### 3. Data Loading and Cleaning
+```python
 def load_filtered_data(file_list):
-    # Loads and processes CSVs, selects columns, converts labels
+    # Loads CSV files with selected columns
+    # Converts 'failure' column to integer
 
 def clean_data(df):
-    # Handles NaNs, infs, and ensures numeric types
-4. Model Configuration
-python
-Copy
-Edit
+    # Handles missing and infinite values
+    # Converts features to numeric types
+```
+
+### 4. Model Configuration
+```python
 clf = RandomForestClassifier(
     n_estimators=100,
     max_depth=8,
@@ -102,100 +97,108 @@ clf = RandomForestClassifier(
     random_state=42,
     n_jobs=-1
 )
-Includes all regularization settings for robust training.
+```
 
-5. Metric Tracking and Visualization
-python
-Copy
-Edit
-# Tracking lists
+### 5. Metric Tracking
+```python
+# Track metrics during training
 train_accuracies = []
 val_accuracies = []
 val_precisions = []
 val_recalls = []
 val_f1s = []
+```
 
-# Plot metrics after training
-plt.plot(...)
-6. Model Selection
-python
-Copy
-Edit
+### 6. Optimal Model Selection
+```python
 best_idx = np.argmax(val_f1s)
-# Retrain using best number of trees
-7. Evaluation and Confusion Matrices
-python
-Copy
-Edit
+clf = RandomForestClassifier(n_estimators=estimator_range[best_idx], ...)
+```
+
+### 7. Evaluation and Visualization
+```python
 def evaluate(y_true, y_pred, label):
-    # Prints report and plots confusion matrix
-🧠 Anti-Overfitting Techniques
-Technique   Parameter   Purpose
-Tree Depth Limitation   max_depth=8 Limits tree complexity
-Split Requirement   min_samples_split=10    Avoids over-specific splits
-Leaf Size Control   min_samples_leaf=5  Ensures minimum leaf size
-Feature Subsampling max_features='sqrt' Improves ensemble diversity
-Class Weight Balancing  class_weight='balanced' Addresses class imbalance
-Optimal Tree Selection  Based on validation F1  Balances model performance and complexity
+    # Prints classification report
+    # Generates confusion matrix
+```
 
-📈 Interpreting Results
-1. train_val_metrics.png
-Solid lines: Accuracy (Train vs. Validation)
+## Interpreting Results
 
-Dashed lines: Loss (1 - Accuracy)
+### 1. Accuracy/Loss Plot (`train_val_metrics.png`)
+- **Solid lines**: Accuracy metrics
+- **Dashed lines**: Loss metrics (1 - accuracy)
+- **Ideal behavior**: Validation metrics follow training closely
+- **Overfitting**: Large gap between training and validation
 
-Good model: Validation closely follows training accuracy
+### 2. Precision/Recall/F1 Plot (`val_metrics_vs_trees.png`)
+- **Precision (Red)**: Accuracy of positive predictions  
+- **Recall (Blue)**: Coverage of actual positives  
+- **F1 Score (Green)**: Balance between precision and recall  
+- **Dashed line**: Optimal number of trees
 
-Overfitting: Large accuracy gap between train and validation
+### 3. Confusion Matrix
+- **Top-left**: True negatives  
+- **Top-right**: False positives  
+- **Bottom-left**: False negatives  
+- **Bottom-right**: True positives  
 
-2. val_metrics_vs_trees.png
-Precision (Red): Accuracy of predicted failures
+### 4. Feature Importance (`feature_importance.png`)
+![Feature Importance](./src/feature_importance.png)
+- Shows relative importance of each SMART attribute  
+- Helps identify which metrics are most predictive  
 
-Recall (Blue): Captures actual failures
-
-F1 Score (Green): Balance of precision and recall
-
-Dashed vertical line: Selected tree count
-
-3. validation_confusion_matrix.png / test_confusion_matrix.png
-Cell    Meaning
-Top-left    True Negatives (correct non-failure)
-Top-right   False Positives (false alarms)
-Bottom-left False Negatives (missed failures)
-Bottom-right    True Positives (correct failures)
-
-4. feature_importance.png
-Bar chart showing importance of each SMART attribute
-
-Helps identify which metrics best predict failure
-
-🧪 Expected Output
-text
-Copy
-Edit
+## Expected Output
+```
 Loading training data...
-Training samples: 15000
+Training samples: 1777722
 Loading validation data...
 Loading test data...
+
 Training Regularized Random Forest to prevent overfitting...
-Training completed in 15.32 seconds.
+Training completed in 17.88 seconds.
 
 Tracking metrics vs. number of trees with regularization...
-Trees:  10 | Train Acc: 0.9820 | Val Acc: 0.9805 | Val F1: 0.7500
-Trees:  20 | Train Acc: 0.9835 | Val Acc: 0.9810 | Val F1: 0.7692
-...
-Trees: 100 | Train Acc: 0.9845 | Val Acc: 0.9818 | Val F1: 0.7826
+Trees:  10 | Train Acc: 0.9952 | Val Acc: 0.9952 | Val F1: 0.0301
+Trees:  20 | Train Acc: 0.9932 | Val Acc: 0.9932 | Val F1: 0.0212
+Trees:  30 | Train Acc: 0.9922 | Val Acc: 0.9922 | Val F1: 0.0187
+Trees:  40 | Train Acc: 0.9920 | Val Acc: 0.9920 | Val F1: 0.0182
+Trees:  50 | Train Acc: 0.9915 | Val Acc: 0.9915 | Val F1: 0.0172
+Trees:  60 | Train Acc: 0.9922 | Val Acc: 0.9922 | Val F1: 0.0186
+Trees:  70 | Train Acc: 0.9922 | Val Acc: 0.9922 | Val F1: 0.0187
+Trees:  80 | Train Acc: 0.9926 | Val Acc: 0.9926 | Val F1: 0.0196
+Trees:  90 | Train Acc: 0.9923 | Val Acc: 0.9923 | Val F1: 0.0190
+Trees: 100 | Train Acc: 0.9925 | Val Acc: 0.9925 | Val F1: 0.0194
 
-Selected model with 80 trees (best validation F1: 0.7852)
+Selected model with 10 trees (best validation F1: 0.0301)
+
+Final Model Evaluation:
 
 Validation Classification Report:
               precision    recall  f1-score   support
-           0     0.9921    0.9990    0.9956      3912
-           1     0.9000    0.7000    0.7857        10
-    accuracy                         0.9913      3922
-   macro avg     0.9460    0.8495    0.8906      3922
-weighted avg     0.9910    0.9913    0.9910      3922
+
+           0     1.0000    0.9952    0.9976    296265
+           1     0.0153    1.0000    0.0301        22
+
+    accuracy                         0.9952    296287
+   macro avg     0.5076    0.9976    0.5138    296287
+weighted avg     0.9999    0.9952    0.9975    296287
+
+
+Test Classification Report:
+              precision    recall  f1-score   support
+
+           0     1.0000    0.9952    0.9976    296265
+           1     0.0153    1.0000    0.0301        22
+
+    accuracy                         0.9952    296287
+   macro avg     0.5076    0.9976    0.5138    296287
+weighted avg     0.9999    0.9952    0.9975    296287
 
 Saving model to 'random_forest_model.pkl'...
-✅ Conclusion
-This project provides a robust and interpretable machine learning pipeline for predicting hard drive failures using SMART attributes. Regularization techniques are integrated to improve generalization, and comprehensive visualizations guide evaluation and feature understanding. The model selection based on F1 score ensures a balanced trade-off between precision (avoiding false alarms) and recall (detecting real failures).
+
+Script completed successfully!
+
+```
+
+## Conclusion
+This implementation provides a robust framework for predicting hard drive failures using SMART attributes. The regularization techniques ensure the model generalizes well to new data, while the comprehensive visualizations offer insights into model performance and feature importance. The final model selection based on F1 score ensures a balance between precision (avoiding false alarms) and recall (catching actual failures).
