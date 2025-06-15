@@ -1,7 +1,8 @@
 # Random Forest for Hard Drive Failure Prediction
 ## Overview
-
+'''
 This project implements a Random Forest classifier to predict hard drive failures using SMART (Self-Monitoring, Analysis, and Reporting Technology) attributes. The model incorporates regularization techniques to prevent overfitting and includes comprehensive visualizations to analyze model performance.
+'''
 
 Key Features
 SMART feature selection for failure prediction
