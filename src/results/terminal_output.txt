@@ -1,0 +1,68 @@
+(env_dell_caseStudy) vahid@g5:~/Dell_ws/dell_ws/src$ python3 train_random_forest.py 
+Loading training data...
+Training samples: 1777722
+Loading validation data...
+Loading test data...
+
+Training Regularized Random Forest to prevent overfitting...
+Training completed in 17.88 seconds.
+
+Tracking metrics vs. number of trees with regularization...
+Trees:  10 | Train Acc: 0.9952 | Val Acc: 0.9952 | Val F1: 0.0301
+Trees:  20 | Train Acc: 0.9932 | Val Acc: 0.9932 | Val F1: 0.0212
+Trees:  30 | Train Acc: 0.9922 | Val Acc: 0.9922 | Val F1: 0.0187
+Trees:  40 | Train Acc: 0.9920 | Val Acc: 0.9920 | Val F1: 0.0182
+Trees:  50 | Train Acc: 0.9915 | Val Acc: 0.9915 | Val F1: 0.0172
+Trees:  60 | Train Acc: 0.9922 | Val Acc: 0.9922 | Val F1: 0.0186
+Trees:  70 | Train Acc: 0.9922 | Val Acc: 0.9922 | Val F1: 0.0187
+Trees:  80 | Train Acc: 0.9926 | Val Acc: 0.9926 | Val F1: 0.0196
+Trees:  90 | Train Acc: 0.9923 | Val Acc: 0.9923 | Val F1: 0.0190
+Trees: 100 | Train Acc: 0.9925 | Val Acc: 0.9925 | Val F1: 0.0194
+
+Selected model with 10 trees (best validation F1: 0.0301)
+
+Final Model Evaluation:
+
+Validation Classification Report:
+              precision    recall  f1-score   support
+
+           0     1.0000    0.9952    0.9976    296265
+           1     0.0153    1.0000    0.0301        22
+
+    accuracy                         0.9952    296287
+   macro avg     0.5076    0.9976    0.5138    296287
+weighted avg     0.9999    0.9952    0.9975    296287
+
+
+Test Classification Report:
+              precision    recall  f1-score   support
+
+           0     1.0000    0.9952    0.9976    296265
+           1     0.0153    1.0000    0.0301        22
+
+    accuracy                         0.9952    296287
+   macro avg     0.5076    0.9976    0.5138    296287
+weighted avg     0.9999    0.9952    0.9975    296287
+
+Saving model to 'random_forest_model.pkl'...
+
+Script completed successfully!
+(env_dell_caseStudy) vahid@g5:~/Dell_ws/dell_ws/src$ python3 unsupervised_method.py 
+Loading training (healthy only)...
+Loading test...
+Training One-Class SVM on normal behavior...
+Predicting on test data (anomaly detection)...
+
+Test Evaluation (Ground Truth Used Only for Evaluation):
+              precision    recall  f1-score   support
+
+           0     0.9999    0.9900    0.9949    296265
+           1     0.0024    0.3182    0.0047        22
+
+    accuracy                         0.9899    296287
+   macro avg     0.5012    0.6541    0.4998    296287
+weighted avg     0.9999    0.9899    0.9949    296287
+
+Model saved as 'one_class_svm_model.pkl' and scaler as 'scaler.pkl'
+
+✅ Script completed (unsupervised + real-time-friendly model ready).
