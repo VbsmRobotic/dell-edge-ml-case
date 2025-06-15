@@ -6,6 +6,8 @@
 
 # Ignore document files
 *.docx
+*.~lock.Analysis of Random Forest Training Results.docx#
+*.~lock.RandomForest.docx#
 
 # Ignore other temporary files
 *.pkl
