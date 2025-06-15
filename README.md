@@ -32,7 +32,6 @@ develop_version1/
 		└── results/ # Visualizations, evaluation metrics
 		|	├── supervised/
 		|	└── unsupervised/
-        |
 		└── README.md # Analysis results of the supervised and unsupervised methods.
 ```
 
