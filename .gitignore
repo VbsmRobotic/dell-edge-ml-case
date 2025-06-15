@@ -2,7 +2,7 @@
 *.csv
 
 # Ignore image files
-*.png
+# *.png
 
 # Ignore document files
 *.docx
