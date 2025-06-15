@@ -125,18 +125,22 @@ def evaluate(y_true, y_pred, label):
 ## Interpreting Results
 
 ### 1. Accuracy/Loss Plot (`train_val_metrics.png`)
+![train_val_metrics](./src/train_val_metrics.png)
 - **Solid lines**: Accuracy metrics
 - **Dashed lines**: Loss metrics (1 - accuracy)
 - **Ideal behavior**: Validation metrics follow training closely
 - **Overfitting**: Large gap between training and validation
 
 ### 2. Precision/Recall/F1 Plot (`val_metrics_vs_trees.png`)
+![val_metrics_vs_trees](./src/val_metrics_vs_trees.png)
 - **Precision (Red)**: Accuracy of positive predictions  
 - **Recall (Blue)**: Coverage of actual positives  
 - **F1 Score (Green)**: Balance between precision and recall  
 - **Dashed line**: Optimal number of trees
 
 ### 3. Confusion Matrix
+![validation_confusion_matrix](./src/validation_confusion_matrix.png)
+![test_confusion_matrix](./src/test_confusion_matrix.png)
 - **Top-left**: True negatives  
 - **Top-right**: False positives  
 - **Bottom-left**: False negatives  
@@ -148,6 +152,7 @@ def evaluate(y_true, y_pred, label):
 - Helps identify which metrics are most predictive  
 
 ## Expected Output
+![Output_Terminal](./src/Output_Terminal.png)
 ```
 Loading training data...
 Training samples: 1777722
