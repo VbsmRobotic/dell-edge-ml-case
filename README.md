@@ -27,7 +27,7 @@ develop_version1/
 		|
 		├── models/ # Saved models
 		│ 	├── random_forest_model.pkl
-		│ 	└── svm_model.pkl
+		│ 	└── one_class_svm_model.pkl
 		|
 		└── results/ # Visualizations, evaluation metrics
 			├── supervised/
