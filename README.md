@@ -1,4 +1,4 @@
-# The supervised approach, a Random Forest algorithm for Hard Drive Failure Prediction
+# Supervised Learning Evaluation for Hard Drive Failure Prediction
 
 ## Project Overview
 This project implements a supervised learning approach using Random Forest to predict hard drive failures based on SMART (Self-Monitoring, Analysis, and Reporting Technology) attributes. The model incorporates advanced regularization techniques to prevent overfitting and includes comprehensive visualizations to analyze model performance.
@@ -237,3 +237,51 @@ For production-grade predictive maintenance systems, consider integrating:
 
 ### 🎯 Summary:
 The current model offers a good starting point for experimentation but would require significant refinement to be trusted in production. Future work should focus on handling rare events more robustly and aligning model behavior with real-world operational constraints.
+
+
+---
+
+## ⚙️ Unsupervised Learning: One-Class SVM Evaluation
+
+This approach leverages a **One-Class SVM** to model the normal behavior of hard drives using only healthy samples. It aims to detect anomalies during testing by flagging deviations from the learned distribution.
+
+### 🧪 Evaluation Summary (Test Set)
+
+|                    | **Predicted Normal** | **Predicted Anomaly** |
+| ------------------ | -------------------- | --------------------- |
+| **Actual Normal**  | 293,301              | 2,964                 |
+| **Actual Failure** | 15                   | 7                     |
+
+**Key Metrics:**
+
+| Metric                                 | Value  |
+| -------------------------------------- | ------ |
+| **Accuracy**                           | 98.99% |
+| **Failure Recall (Detection Rate)**    | 31.82% |
+| **Failure Precision**                  | 0.24%  |
+| **Failure F1-Score**                   | 0.47%  |
+| **False Positives (Normal→Anomaly)**   | 2,964  |
+| **True Positives (Detected Failures)** | 7 / 22 |
+
+![svm_confusion_matrix](./src/results/unsupervised/svm_confusion_matrix.png)
+![Unsupervised_Terminal_Output](./src/results/unsupervised/Unsupervised_Terminal_Output.png)
+
+### ✅ Strengths
+
+- Learns only from **healthy drives**
+- High **overall accuracy**
+- Generalizes to unseen anomalies
+
+### ⚠️ Limitations
+
+- **Very low precision** on failures
+- **Low F1-score**
+- **Not production-ready**: High false alarm rate
+
+
+### 🎯 Summary
+
+The One-Class SVM provides a promising unsupervised baseline for anomaly detection but struggles with precision and reliability in highly imbalanced datasets. While effective at identifying some failures, its high false positive rate limits its practical application without additional refinement.
+
+
+
