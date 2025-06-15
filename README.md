@@ -30,8 +30,10 @@ develop_version1/
 		│ 	└── one_class_svm_model.pkl
 		|
 		└── results/ # Visualizations, evaluation metrics
-			├── supervised/
-			└── unsupervised/
+		|	├── supervised/
+		|	└── unsupervised/
+        |
+		└── README.md # Analysis results of the supervised and unsupervised methods.
 ```
 
 ---
