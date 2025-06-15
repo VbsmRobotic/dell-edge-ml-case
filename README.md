@@ -4,8 +4,8 @@ This repository demonstrates both **supervised** and **unsupervised** anomaly de
 
 Two main approaches have been implemented and are available in the [`develop_version1`](https://github.com/VbsmRobotic/dell-edge-ml-case.git) branch:
 
-- ✅ Supervised: Random Forest classifier
-- ⚙️ Unsupervised: One-Class SVM anomaly detector
+- ✅ In the supervised approach, a Random Forest algorithm is trained as a classifier using labeled data.
+- ⚙️ In the unsupervised approach, a One-Class SVM is used for anomaly detection on normal-only data.
 
 The branch contains:
 - Model training scripts
