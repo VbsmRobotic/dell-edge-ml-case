@@ -1,0 +1,13 @@
+# Ignore data files
+*.csv
+
+# Ignore image files
+*.png
+
+# Ignore document files
+*.docx
+
+# Ignore other temporary files
+*.pkl
+__pycache__/
+*.log

@@ -1,0 +1,8 @@
+# Usage: pip install -r requirements.txt
+numpy==1.13.3
+matplotlib==2.2.5
+opencv-python==3.4.0.12
+pandas
+scikit-learn
+gdown
+seaborn
