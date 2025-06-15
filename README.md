@@ -130,6 +130,9 @@ def evaluate(y_true, y_pred, label):
 - **Dashed lines**: Loss metrics (1 - accuracy)
 - **Ideal behavior**: Validation metrics follow training closely
 - **Overfitting**: Large gap between training and validation
+- **TerminalOutput**: Trees:  10 | Train Acc: 0.9952 | Val Acc: 0.9952 
+    The training curve is closely fitted to the validation curve, both in terms of accuracy and loss.
+
 
 ### 2. Precision/Recall/F1 Plot (`val_metrics_vs_trees.png`)
 ![val_metrics_vs_trees](./src/val_metrics_vs_trees.png)
