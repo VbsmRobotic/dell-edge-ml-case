@@ -35,6 +35,18 @@ FILE_ID = "1f1SA_MzgA9kwSBvs-stfyGzJE1yPaLsd"
 # Construct download URL
 BASE_URL = "https://drive.google.com/uc?id=" + FILE_ID
 
+# Define data directory
+DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
+os.makedirs(DATA_DIR, exist_ok=True)
+
+# Define output directory
+RESULTS_DIR = os.path.join(os.path.dirname(__file__), "results", "supervised")
+os.makedirs(RESULTS_DIR, exist_ok=True)
+
+# Define path to save model
+MODELS_DIR = os.path.join(os.path.dirname(__file__), "models")
+os.makedirs(MODELS_DIR, exist_ok=True)
+
 # Define dataset files
 train_days = ["2025-01-01.csv", "2025-01-02.csv", "2025-01-03.csv",
               "2025-01-04.csv", "2025-01-05.csv", "2025-01-06.csv"]  # 6 days of training data
@@ -54,10 +66,15 @@ columns_to_use = ['failure'] + selected_features
 # ------------------------------------------------------------------------------
 # Check and download any missing files from Google Drive
 for file_name in all_files:
-    if not os.path.exists(file_name):
-        print(f"Downloading {file_name}...")
-        # Download file using gdown library
-        gdown.download(url=BASE_URL, output=file_name, quiet=False)
+    file_path = os.path.join(DATA_DIR, file_name)
+    if not os.path.exists(file_path):
+        print(f"Downloading {file_name} to {file_path}...")
+        gdown.download(url=BASE_URL, output=file_path, quiet=False)
+# for file_name in all_files:
+#     if not os.path.exists(file_name):
+#         print(f"Downloading {file_name}...")
+#         # Download file using gdown library
+#         gdown.download(url=BASE_URL, output=file_name, quiet=False)
 
 # ------------------------------------------------------------------------------
 # STEP 4: DATA LOADING AND CLEANING FUNCTIONS
@@ -255,7 +272,7 @@ plt.title("Train vs Validation Metrics with Regularization")
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig("train_val_metrics.png")  # Save plot
+plt.savefig(os.path.join(RESULTS_DIR, "train_val_metrics.png"))  # Save plot
 plt.close()  # Close figure to free memory
 
 # Create figure for precision/recall/F1 plot
@@ -275,7 +292,7 @@ plt.title("Validation Metrics vs Tree Count")
 plt.legend()
 plt.grid(True)
 plt.tight_layout()
-plt.savefig("val_metrics_vs_trees.png")  # Save plot
+plt.savefig(os.path.join(RESULTS_DIR, "val_metrics_vs_trees.png"))  # Save plot
 plt.close()
 
 # ------------------------------------------------------------------------------
@@ -305,7 +322,10 @@ def evaluate(y_true, y_pred, label):
     plt.ylabel("Actual")
     plt.tight_layout()
     # Save confusion matrix plot
-    plt.savefig(f"{label.lower().replace(' ', '_')}_confusion_matrix.png")
+    # plt.savefig(f"{label.lower().replace(' ', '_')}_confusion_matrix.png")
+    # Format filename and save in correct folder
+    filename = f"{label.lower().replace(' ', '_')}_confusion_matrix.png"
+    plt.savefig(os.path.join(RESULTS_DIR, filename))
     plt.close()
 
 print("\nFinal Model Evaluation:")
@@ -320,9 +340,14 @@ evaluate(y_test, test_pred, "Test")
 # ------------------------------------------------------------------------------
 # STEP 12: MODEL PERSISTENCE
 # ------------------------------------------------------------------------------
-print("Saving model to 'random_forest_model.pkl'...")
-# Serialize and save trained model
-joblib.dump(clf, 'random_forest_model.pkl')
+# print("Saving model to 'random_forest_model.pkl'...")
+# # Serialize and save trained model
+# joblib.dump(clf, 'random_forest_model.pkl')
+
+model_path = os.path.join(MODELS_DIR, "random_forest_model.pkl")
+print(f"Saving model to '{model_path}'...")
+# Serialize and save the trained model
+joblib.dump(clf, model_path)
 
 # ------------------------------------------------------------------------------
 # STEP 13: FEATURE IMPORTANCE VISUALIZATION
@@ -340,7 +365,7 @@ plt.bar(range(len(selected_features)), importances[indices], color="skyblue")
 # Set x-axis labels to feature names
 plt.xticks(range(len(selected_features)), [selected_features[i] for i in indices], rotation=45)
 plt.tight_layout()
-plt.savefig("feature_importance.png")  # Save plot
+plt.savefig(os.path.join(RESULTS_DIR, "feature_importance.png"))  # Save plot
 plt.close()
 
 print("\nScript completed successfully!")
