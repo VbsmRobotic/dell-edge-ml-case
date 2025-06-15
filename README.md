@@ -1,4 +1,4 @@
-# Hard Drive Failure Prediction using Random Forest
+# The supervised approach, a Random Forest algorithm for Hard Drive Failure Prediction
 
 ## Project Overview
 This project implements a supervised learning approach using Random Forest to predict hard drive failures based on SMART (Self-Monitoring, Analysis, and Reporting Technology) attributes. The model incorporates advanced regularization techniques to prevent overfitting and includes comprehensive visualizations to analyze model performance.
