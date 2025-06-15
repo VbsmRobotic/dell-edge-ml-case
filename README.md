@@ -75,7 +75,7 @@ The branch contains:
 ---
 
 ## 📂 Repository Structure
-
+```
 develop_version1/
 └── src/
 ├── supervised_random_forest.py # Random Forest supervised classification
@@ -88,3 +88,4 @@ develop_version1/
 └── results/ # Visualizations, evaluation metrics
 ├── supervised/
 └── unsupervised/
+```
